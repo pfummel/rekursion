@@ -22,12 +22,12 @@ public class Pathfinder implements Simple {
         for ( ; i < map.length; i++) {
             for ( ; j < map.length; j++) {
                 if (map[i][j] == start) {
-                    xStart = i;
-                    yStart = j;
+                    this.xStart = i;
+                    this.yStart = j;
                 }
                 if (map[i][j] == goal) {
-                    xGoal = i;
-                    yGoal = j;
+                    this.xGoal = i;
+                    this.yGoal = j;
                 }
             }
         }
