@@ -32,7 +32,14 @@ public class Pathfinder implements Simple {
             }
         }
         
-        
+        if(map[xStart + 1][yStart] == ' ') {
+        }
+        if(map[xStart - 1][yStart] == ' ') {
+        }
+        if(map[xStart][yStart + 1] == ' ') {
+        }
+        if(map[xStart][yStart - 1] == ' ') {
+        }
         
         return;
     }
