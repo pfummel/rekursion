@@ -3,6 +3,9 @@ Klasse Pathfinder
 @author David Nancekievill MATRIKELNUMMER Gruppe 9c
 @author Markus Berning MATRIKELNUMMER Gruppe 9c
 */
+
+import java.util.Arrays;
+
 public class Pathfinder implements Simple {
     
     /*
@@ -21,36 +24,35 @@ public class Pathfinder implements Simple {
         /*
         Ermittelt die Koordinaten der Anfangs- und Endpunkte
         */
-        int i = 0, j = 0;
-        
-        for ( ; i < map.length; i++) {
-            for ( ; j < map.length; j++) {
+ 
+        for (int i = 0 ; i < map.length; i++) {
+            for (int j = 0 ; j < map[0].length; j++) {
                 if (map[i][j] == start) {
                     this.xStart = i;
                     this.yStart = j;
+                    
                 }
                 if (map[i][j] == goal) {
                     this.xGoal = i;
                     this.yGoal = j;
+                    System.out.println(xGoal);
+                    System.out.println(yGoal);
                 }
             }
         }
         
         initPriority();
-        
         move(xStart, yStart);
         
-        return "Es wurde ein Weg gefunden!";
+        return toString();
     }
     
     private void initPriority() {
         
-        int i = 0, j = 0;
-        
         this.priority = new int[map.length][map[0].length];
         
-        for ( ; i < map.length; i++) {
-            for ( ; j < map.length; j++) {
+        for (int i = 0 ; i < map.length; i++) {
+            for (int j = 0 ; j < map[0].length; j++) {
                 if (this.map[i][j] == '#') {
                     this.priority[i][j] = 3;
                 }
@@ -65,19 +67,41 @@ public class Pathfinder implements Simple {
     }
     
     private void move(int x, int y) {
-    
+
+   
         boolean validMove = false;
     
         this.priority[x][y] = 1;
         
-        while(validMove == false) {
-            if(this.priority[x][y] == 2) {
-                System.out.println("Ein Weg wurde gefunden.");
+        if(validMove == false && ((x + 1) < this.map.length)) {
+            if(this.priority[x + 1][y] == 2) {
+                this.map[x][y] = '.';
+                validMove = true;
             }
         }
-        
+
+        if(validMove == false && x - 1 > 0) {
+            if(this.priority[x - 1][y] == 2) {
+                this.map[x][y] = '.';
+                validMove = true;
+            }
+        }
+
+        if(validMove == false && y + 1 < this.map[0].length) {
+            if(this.priority[x][y + 1] == 2) {
+                this.map[x][y] = '.';
+                validMove = true;
+            }
+        }
+
+        if(validMove == false && y - 1 > 0) {
+            if(this.priority[x][y - 1] == 2) {
+                this.map[x][y] = '.';
+                validMove = true;
+            }
+        }        
         //Fragt nach 0 in den umliegenden Feldern.
-        while(validMove == false) {
+        if(validMove == false && x + 1 < this.map.length) {
             if(this.priority[x + 1][y] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
@@ -89,7 +113,7 @@ public class Pathfinder implements Simple {
             }
         }
         
-        while(validMove == false) {
+        if(validMove == false && x - 1 > 0) {
             if(this.priority[x - 1][y] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
@@ -101,7 +125,7 @@ public class Pathfinder implements Simple {
             }
         }
         
-        while(validMove == false) {
+        if(validMove == false && y + 1 < this.map[0].length) {
             if(this.priority[x][y + 1] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
@@ -113,7 +137,7 @@ public class Pathfinder implements Simple {
             }
         }
         
-        while(validMove == false) {
+        if(validMove == false && y - 1 > 0) {
             if(this.priority[x][y - 1] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
@@ -127,7 +151,7 @@ public class Pathfinder implements Simple {
         
         //Fragt nach 1 und "schon besucht" in den umliegenden Feldern.
         
-        while(validMove == false) {
+        if(validMove == false && x + 1 < this.map.length) {
             if(this.priority[x + 1][y] == 1 && this.map[x + 1][y] == '.') {
                 this.map[x][y] = ' ';
                 
@@ -136,7 +160,7 @@ public class Pathfinder implements Simple {
             }
         }
         
-        while(validMove == false) {
+        if(validMove == false && x - 1 > 0) {
             if(this.priority[x - 1][y] == 1 && this.map[x - 1][y] == '.') {
                 this.map[x][y] = ' ';
                 
@@ -145,7 +169,7 @@ public class Pathfinder implements Simple {
             }
         }
         
-        while(validMove == false) {
+        if(validMove == false && y + 1 < this.map[0].length) {
             if(this.priority[x][y + 1] == 1 && this.map[x][y + 1] == '.') {
                 this.map[x][y] = ' ';
                 
@@ -154,14 +178,14 @@ public class Pathfinder implements Simple {
             }
         }
         
-        while(validMove == false) {
+        if(validMove == false && y - 1 > 0) {
             if(this.priority[x][y - 1] == 1 && this.map[x][y - 1] == '.') {
                 this.map[x][y] = ' ';
                 
                 validMove = true;
                 move(x, y - 1);            
             }
-        }
+        } 
     }
     
     public void setMap(char[][] map) {
@@ -170,5 +194,21 @@ public class Pathfinder implements Simple {
     
     public char[][] getMap() {
         return this.map;
-    }    
+    }
+
+
+    public String toString() {
+    
+        String mapToString = "\n";
+        for (int i = 0; i < map.length; i++) {
+            for (int n = 0; n < map[0].length; n++) {
+                mapToString += map[i][n];
+                if (n == map[0].length - 1) {
+                    mapToString += "\n";
+                }
+            }
+        }
+        mapToString += "\n";
+        return mapToString;
+    }
 }
