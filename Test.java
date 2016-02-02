@@ -10,7 +10,7 @@ public class Test {
                     {'#','S','#',' ',' '},
                     {'#',' ',' ',' ','#'},
                     {'#',' ','#',' ','#'},
-                    {'#','#','#','X','#'}}
+                    {'#','#','#','X','#'}};
     Pathfinder pf = new Pathfinder();
     pf.setMap(map);
     System.out.println(pf.searchPath('S','X'));
