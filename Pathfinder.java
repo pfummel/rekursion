@@ -73,7 +73,44 @@ public class Pathfinder implements Simple {
     
         this.priority[x][y] = 1;
         
-        if(validMove == false && ((x + 1) < this.map.length)) {
+        //Fragt nach dem Ziel
+        isGoal();
+             
+        //Fragt nach 0 in den umliegenden Feldern.
+        isZero();
+        
+        //Fragt nach 1 und "schon besucht" in den umliegenden Feldern.
+        isOne();
+         
+    }
+    
+    public void setMap(char[][] map) {
+        this.map = map;
+    }
+    
+    public char[][] getMap() {
+        return this.map;
+    }
+
+
+    public String toString() {
+    
+        String mapToString = "\n";
+        for (int i = 0; i < map.length; i++) {
+            for (int n = 0; n < map[0].length; n++) {
+                mapToString += map[i][n];
+                if (n == map[0].length - 1) {
+                    mapToString += "\n";
+                }
+            }
+        }
+        mapToString += "\n";
+        return mapToString;
+    }
+    
+    private void isGoal() {
+        
+         if(validMove == false && ((x + 1) < this.map.length)) {
             if(this.priority[x + 1][y] == 2) {
                 this.map[x][y] = '.';
                 validMove = true;
@@ -99,8 +136,11 @@ public class Pathfinder implements Simple {
                 this.map[x][y] = '.';
                 validMove = true;
             }
-        }        
-        //Fragt nach 0 in den umliegenden Feldern.
+        }
+    }
+    
+    private void isZero() {
+        
         if(validMove == false && x + 1 < this.map.length) {
             if(this.priority[x + 1][y] == 0) {
                 
@@ -148,8 +188,9 @@ public class Pathfinder implements Simple {
                 move(x, y - 1);            
             }
         }
-        
-        //Fragt nach 1 und "schon besucht" in den umliegenden Feldern.
+    }
+    
+    private void isOne() {
         
         if(validMove == false && x + 1 < this.map.length) {
             if(this.priority[x + 1][y] == 1 && this.map[x + 1][y] == '.') {
@@ -185,30 +226,6 @@ public class Pathfinder implements Simple {
                 validMove = true;
                 move(x, y - 1);            
             }
-        } 
-    }
-    
-    public void setMap(char[][] map) {
-        this.map = map;
-    }
-    
-    public char[][] getMap() {
-        return this.map;
-    }
-
-
-    public String toString() {
-    
-        String mapToString = "\n";
-        for (int i = 0; i < map.length; i++) {
-            for (int n = 0; n < map[0].length; n++) {
-                mapToString += map[i][n];
-                if (n == map[0].length - 1) {
-                    mapToString += "\n";
-                }
-            }
         }
-        mapToString += "\n";
-        return mapToString;
     }
 }
