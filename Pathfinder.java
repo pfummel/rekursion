@@ -109,14 +109,6 @@ public class Pathfinder implements Simple {
     public void setMap(char[][] map) {
         this.map = map;
     }
-    
-    /**
-     * Git die Karte zurueck.
-     * @return Die aktuelle map.
-     */
-    public char[][] getMap() {
-        return this.map;
-    }
 
     /**
      * Ueberschreibt die toString Methode des Objektes und gibt
