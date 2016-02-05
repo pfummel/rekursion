@@ -30,11 +30,24 @@ public class Pathfinder implements Simple {
      * @return Gibt den gefundenen Weg in der Map als String zurueck.
      */
     public String searchPath(char start, char goal) {
+       
+	getStart(start);
+
+	getGoal(goal);
+	    
+        initPriority();
+	
+        move(xStart, yStart);
         
-        /*
-        Ermittelt die Koordinaten der Anfangs- und Endpunkte
-        */
- 
+        return toString();
+    }
+
+    /**
+     * Ermittelt die Koordinaten des Starts
+     * @param start Bekommt den char des Starts uebergeben
+     */
+    private void getStart(char start) {
+    
         for (int i = 0 ; i < map.length; i++) {
             for (int j = 0 ; j < map[0].length; j++) {
                 if (map[i][j] == start) {
@@ -42,20 +55,24 @@ public class Pathfinder implements Simple {
                     this.yStart = j;
                     
                 }
+            }
+        }
+    }
+    
+    /**
+     * Ermittelt die Koordinaten des Ziels
+     * @param goal Bekommt den char des Ziels uebergeben
+     */
+    private void getGoal(char goal) {
+    
+        for (int i = 0 ; i < map.length; i++) {
+            for (int j = 0 ; j < map[0].length; j++) {
                 if (map[i][j] == goal) {
                     this.xGoal = i;
                     this.yGoal = j;
-                    //System.out.println(xGoal);
-                    //System.out.println(yGoal);
                 }
             }
         }
-        
-        initPriority();
-	
-        move(xStart, yStart);
-        
-        return toString();
     }
    /**
     * Initialisiert das Priorityfeld, 3 fuer Waende, 0 fuer freien Weg,
