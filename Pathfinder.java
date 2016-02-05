@@ -4,13 +4,11 @@ Klasse Pathfinder
 @author Markus Berning MATRIKELNUMMER Gruppe 9c
 */
 
-import java.util.Arrays;
-
 public class Pathfinder implements Simple {
    
     /**
      *Zweidimensionales char-Array welches map enthaelt. 
-     */	
+     */
     private char[][] map;
    
    /**
@@ -30,13 +28,13 @@ public class Pathfinder implements Simple {
      * @return Gibt den gefundenen Weg in der Map als String zurueck.
      */
     public String searchPath(char start, char goal) {
-       
-	getStart(start);
 
-	getGoal(goal);
-	    
+        getStart(start);
+
+        getGoal(goal);
+
         initPriority();
-	
+
         move(xStart, yStart);
         
         return toString();
@@ -48,8 +46,8 @@ public class Pathfinder implements Simple {
      */
     private void getStart(char start) {
     
-        for (int i = 0 ; i < map.length; i++) {
-            for (int j = 0 ; j < map[0].length; j++) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j] == start) {
                     this.xStart = i;
                     this.yStart = j;
@@ -65,8 +63,8 @@ public class Pathfinder implements Simple {
      */
     private void getGoal(char goal) {
     
-        for (int i = 0 ; i < map.length; i++) {
-            for (int j = 0 ; j < map[0].length; j++) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j] == goal) {
                     this.xGoal = i;
                     this.yGoal = j;
@@ -83,8 +81,8 @@ public class Pathfinder implements Simple {
         
         this.priority = new int[map.length][map[0].length];
         
-        for (int i = 0 ; i < map.length; i++) {
-            for (int j = 0 ; j < map[0].length; j++) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
                 if (this.map[i][j] == '#') {
                     this.priority[i][j] = 3;
                 }
@@ -122,6 +120,7 @@ public class Pathfinder implements Simple {
     
     /**
      * Setzt die von ausserhalb der Klasse uebergebene map.
+     * @param map Zweidimensionales char-Array mit einer map.
      */
     public void setMap(char[][] map) {
         this.map = map;
@@ -130,6 +129,7 @@ public class Pathfinder implements Simple {
     /**
      * Ueberschreibt die toString Methode des Objektes und gibt
      * die map als String kodiert zurueck.
+     * @return Gibt die Map als String kodiert zurueck.
      */
     public String toString() {
     
@@ -157,28 +157,28 @@ public class Pathfinder implements Simple {
      */
     private boolean isGoal(int x, int y, boolean validMove) {
         
-         if(validMove == false && ((x + 1) < this.map.length)) {
-            if(this.priority[x + 1][y] == 2) {
+        if (validMove == false && ((x + 1) < this.map.length)) {
+            if (this.priority[x + 1][y] == 2) {
                 this.map[x][y] = '.';
                 
                 validMove = true;
             }
         }
-        if(validMove == false && x - 1 > 0) {
-            if(this.priority[x - 1][y] == 2) {
+        if (validMove == false && x - 1 > 0) {
+            if (this.priority[x - 1][y] == 2) {
                 this.map[x][y] = '.';
                 validMove = true;
             }
         }
-        if(validMove == false && y + 1 < this.map[0].length) {
-            if(this.priority[x][y + 1] == 2) {
+        if (validMove == false && y + 1 < this.map[0].length) {
+            if (this.priority[x][y + 1] == 2) {
                 this.map[x][y] = '.';
 
                 validMove = true;
             }
         }
-        if(validMove == false && y - 1 > 0) {
-            if(this.priority[x][y - 1] == 2) {
+        if (validMove == false && y - 1 > 0) {
+            if (this.priority[x][y - 1] == 2) {
                 this.map[x][y] = '.';
                 
                 validMove = true;
@@ -199,8 +199,8 @@ public class Pathfinder implements Simple {
      */
     private boolean isZero(int x, int y, boolean validMove) {
         
-        if(validMove == false && x + 1 < this.map.length) {
-            if(this.priority[x + 1][y] == 0) {
+        if (validMove == false && x + 1 < this.map.length) {
+            if (this.priority[x + 1][y] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
                     this.map[x][y] = '.';
@@ -210,8 +210,8 @@ public class Pathfinder implements Simple {
                 move(x + 1, y);
             }
         }
-        if(validMove == false && x - 1 > 0) {
-            if(this.priority[x - 1][y] == 0) {
+        if (validMove == false && x - 1 > 0) {
+            if (this.priority[x - 1][y] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
                     this.map[x][y] = '.';
@@ -221,8 +221,8 @@ public class Pathfinder implements Simple {
                 move(x - 1, y);
             }
         }
-        if(validMove == false && y + 1 < this.map[0].length) {
-            if(this.priority[x][y + 1] == 0) {
+        if (validMove == false && y + 1 < this.map[0].length) {
+            if (this.priority[x][y + 1] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
                     this.map[x][y] = '.';
@@ -232,8 +232,8 @@ public class Pathfinder implements Simple {
                 move(x, y + 1);
             }
         }
-        if(validMove == false && y - 1 > 0) {
-            if(this.priority[x][y - 1] == 0) {
+        if (validMove == false && y - 1 > 0) {
+            if (this.priority[x][y - 1] == 0) {
                 
                 if (!(x == xStart && y == yStart)) { 
                     this.map[x][y] = '.';
@@ -257,32 +257,32 @@ public class Pathfinder implements Simple {
     */ 
     private boolean isOne(int x, int y, boolean validMove) {
         
-        if(validMove == false && x + 1 < this.map.length) {
-            if(this.priority[x + 1][y] == 1 && this.map[x + 1][y] == '.') {
+        if (validMove == false && x + 1 < this.map.length) {
+            if (this.priority[x + 1][y] == 1 && this.map[x + 1][y] == '.') {
                 this.map[x][y] = ' ';
                 
                 validMove = true;
                 move(x + 1, y);         
             }
         }
-        if(validMove == false && x - 1 > 0) {
-            if(this.priority[x - 1][y] == 1 && this.map[x - 1][y] == '.') {
+        if (validMove == false && x - 1 > 0) {
+            if (this.priority[x - 1][y] == 1 && this.map[x - 1][y] == '.') {
                 this.map[x][y] = ' ';
                 
                 validMove = true;
                 move(x - 1, y);
             }
         }
-        if(validMove == false && y + 1 < this.map[0].length) {
-            if(this.priority[x][y + 1] == 1 && this.map[x][y + 1] == '.') {
+        if (validMove == false && y + 1 < this.map[0].length) {
+            if (this.priority[x][y + 1] == 1 && this.map[x][y + 1] == '.') {
                 this.map[x][y] = ' ';
                 
                 validMove = true;
                 move(x, y + 1);            
             }
         }
-        if(validMove == false && y - 1 > 0) {
-            if(this.priority[x][y - 1] == 1 && this.map[x][y - 1] == '.') {
+        if (validMove == false && y - 1 > 0) {
+            if (this.priority[x][y - 1] == 1 && this.map[x][y - 1] == '.') {
                 this.map[x][y] = ' ';
                 
                 validMove = true;
